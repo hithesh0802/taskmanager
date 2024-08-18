@@ -1,23 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import Register from './pages/RegisterPage';
 
-function App() {
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/LoginPage';
+import DashBoard from './pages/DashBoard';
+import ListHeader from './components/ListHeader';
+import CreateProject from './pages/CreateProject';
+import ProjectList from './components/ProjectList';
+
+const App=()=> {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" >
+      <ListHeader listname={'Holiday Tick List'}></ListHeader>
+      <Router>
+        <Routes>
+          <Route path='/register' element={<Register/>}></Route>
+          <Route path='/' element={<Home/>}></Route>
+          <Route path='/login' element={<Login></Login>}></Route>
+          <Route path='/dashboard' element={<DashBoard></DashBoard>}></Route>
+          <Route path='/project' element={<ProjectList></ProjectList>}></Route>
+          <Route path="/projects/new" element={<CreateProject />} />
+        </Routes>
+      </Router>
+      
     </div>
   );
 }
