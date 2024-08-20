@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchTasks,createTask,deleteTask,editingTask,deleteLabel } from '../context/api';
+import { fetchTasks,createTask,deleteTask,editingTask,deleteLabel,fetchProjects } from '../context/api';
+import { io } from 'socket.io-client';
 import '../styling/dashboard.css';
 import ListItem from '../components/ListItem';
 
@@ -18,6 +19,9 @@ const DashBoard = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [taskEditing,setTaskEditing]=useState([]);
     const [filterLabel, setFilterLabel] = useState('');
+    const [projectId, setProjectId] = useState('');
+    const [projects, setProjects] = useState([]);
+    const socket = io('http://localhost:5000');
 
     useEffect(() => {
         const getTasks = async () => {
@@ -27,7 +31,31 @@ const DashBoard = () => {
             setTasks(tasks => tasks?.sort((a,b)=> new Date(a.deadline) - new Date(b.deadline)));
         };
         getTasks();
+
+        socket.on('tasksUpdated', updatedTasks => {
+            setTasks(updatedTasks.tasks);
+        });
+
+        return () => {
+            socket.off('tasksUpdated');
+        };
     }, []);
+
+    useEffect(() => {
+        const getProjects = async () => {
+          const results = await fetchProjects();
+          setProjects(results.projects);
+        };
+        getProjects();
+
+        socket.on('projectsUpdated', updatedProjects => {
+            setProjects(updatedProjects);
+        });
+    
+        return () => {
+            socket.off('projectsUpdated');
+        };
+      }, []);
 
     const handleAddLabel = (e) => {
         e.preventDefault();
@@ -72,9 +100,11 @@ const DashBoard = () => {
 
     const handleEditTask = async(e,taskId) =>{
         e.preventDefault();
+        console.log(taskEditing.project? taskEditing.project[0] : null);
         try{
             const token= localStorage.getItem('token');
-            let result= await editingTask(token,{taskId,titleTask: titleTask || taskEditing.title, taskDescription: taskDescription || taskEditing.description, deadline: deadline|| taskEditing.deadline.split('T')[0], taskProgress: taskProgress || taskEditing.progress , labels: labels || taskEditing.labels} );
+            const projectIdToSend = projectId || (taskEditing.project && taskEditing.project.length > 0 ? taskEditing.project[0] : null);
+            let result= await editingTask(token,{taskId,titleTask: titleTask || taskEditing.title, taskDescription: taskDescription || taskEditing.description, deadline: deadline|| taskEditing.deadline.split('T')[0], taskProgress: taskProgress || taskEditing.progress , labels: labels || taskEditing.labels , projectId: projectIdToSend } );
             console.log(result);
 
             const results = await fetchTasks(token);
@@ -88,6 +118,7 @@ const DashBoard = () => {
             setTaskProgress(0);
             setLabels([]);
             setNewLabel("");
+            setProjectId("");
         }catch(error){
             console.log(error);
         }
@@ -104,7 +135,8 @@ const DashBoard = () => {
                 description: taskDescription,
                 deadline: deadline, 
                 progress: taskProgress,
-                labels: labels
+                labels: labels,
+                project: projectId
             });
             setResult("Created!");
             console.log(results);
@@ -153,12 +185,24 @@ const DashBoard = () => {
                         value={deadline || taskEditing?.deadline?.split('T')[0] || ''}
                         onChange={(e) => setDeadline(e.target.value)}
                     />
+                    <label htmlFor='range'>Drag to select your current Progress</label>
                     <input
-                        type="number"
+                        required type='range' id='range' min={0} max={100} name='progress'
                         value={taskProgress || taskEditing?.progress || 0}
                         onChange={(e) => setTaskProgress(Number(e.target.value))}
                         placeholder="Task Progress"
                     />
+                    <select
+                        value={projectId}
+                        onChange={(e) => setProjectId(e.target.value)}
+                    >
+                        <option value="">Select Project</option>
+                        {projects.map(project => (
+                        <option key={project._id} value={project._id}>
+                            {project.title}
+                        </option>
+                        ))}
+                    </select>
                     <div className="labels-section">
                         <input 
                             type='text'
@@ -225,12 +269,24 @@ const DashBoard = () => {
                             onChange={(e) => setDeadline(e.target.value)}
                             placeholder="Task Deadline"
                         />
+                        <label htmlFor='range'>Drag to select your current Progress</label>
                         <input
-                            type="number"
+                            required type='range' id='range' min={0} max={100} name='progress'
                             value={taskProgress}
                             onChange={(e) => setTaskProgress(Number(e.target.value))} 
                             placeholder="Task Progress"
                         />
+                        <select
+                            value={projectId}
+                            onChange={(e) => setProjectId(e.target.value)}
+                        >
+                            <option value="">Select Project</option>
+                            {projects.map(project => (
+                            <option key={project._id} value={project._id}>
+                                {project.title}
+                            </option>
+                            ))}
+                        </select>
                         <div className="labels-section">
                             <input 
                                 type='text'

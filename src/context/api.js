@@ -22,8 +22,8 @@ export const fetchTasks = async(token) =>{
     return response.data;
 }
 
-export const createTask = async({token,title,description,deadline,progress}) =>{
-    let body= {title,description,deadline,progress};
+export const createTask = async({token,title,description,deadline,progress,project}) =>{
+    let body= {title,description,deadline,progress,project};
     console.log(token,body);
     const response = await axios.post(`${API_URL}/tasks/createTasks`,body, {
         headers: {
@@ -36,6 +36,7 @@ export const createTask = async({token,title,description,deadline,progress}) =>{
 
 export const createProject = async({title,description}) =>{
     const token=localStorage.getItem("token");
+    // console.log(`${API_URL}/projects/createProject`,{title,description});
     const response = await axios.post(`${API_URL}/projects/createProject`,{title,description}, {
         headers: {
             'Content-Type': 'application/json',
@@ -55,8 +56,8 @@ export const deleteTask = async(token,id)=>{
     return response.data;
 }
 
-export const editingTask= async(token,{taskId,titleTask, taskDescription, deadline, taskProgress,labels })=>{
-    const response = await axios.post(`${API_URL}/tasks/editTask`,{taskId,titleTask, taskDescription, deadline, taskProgress,labels }, {
+export const editingTask= async(token,{taskId,titleTask, taskDescription, deadline, taskProgress,labels ,projectId})=>{
+    const response = await axios.post(`${API_URL}/tasks/editTask`,{taskId,titleTask, taskDescription, deadline, taskProgress,labels,projectId }, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`

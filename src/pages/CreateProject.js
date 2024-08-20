@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createProject } from '../context/api'; 
+import '../styling/projectform.css';
 
 const CreateProject = () => {
   const [title, setTitle] = useState('');
@@ -9,7 +10,7 @@ const CreateProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let result=await createProject({ title, description });
+      const result=await createProject({ title, description });
       console.log(result);
       setResult(result);
     } catch (error) {
@@ -18,19 +19,28 @@ const CreateProject = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Project Title"
-      />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Project Description"
-      />
-      <button type="submit">Create Project</button>
+    <form className="project-form" onSubmit={handleSubmit}>
+      <h2>Create a New Project</h2>
+      <div className="form-group">
+        <label>Project Title</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Enter project title"
+          className="form-input"
+        />
+      </div>
+      <div className="form-group">
+        <label>Project Description</label>
+        <textarea
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Enter project description"
+          className="form-input textarea"
+        />
+      </div>
+      <button type="submit" className="submit-button">Create Project</button>
     </form>
   );
 };

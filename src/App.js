@@ -13,7 +13,7 @@ import ProjectList from './components/ProjectList';
 const App=()=> {
   return (
     <div className="App" >
-      <ListHeader listname={'Holiday Tick List'}></ListHeader>
+      <ListHeader listname={'Taskify'}></ListHeader>
       <Router>
         <Routes>
           <Route path='/register' element={<Register/>}></Route>
