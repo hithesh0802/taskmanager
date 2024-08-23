@@ -1,4 +1,4 @@
-.project-management-container {
+/* .project-management-container {
     padding: 20px;
     max-width: 800px;
     margin: 0 auto;
@@ -57,5 +57,198 @@
   
   .task-title {
     color: #007bff;
-  }
+  } */
   
+  /* Basic Reset */
+  /* Ensure full page styling */
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+}
+
+/* Page Container */
+.project-management-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 200px;
+}
+
+.project-management-page{
+  margin-top: 500px;
+}
+
+/* Header Section */
+.header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Main Heading */
+.main-heading {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 700;
+    position: relative;
+}
+
+.main-heading::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #007bff;
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+}
+
+/* Project List Container */
+.project-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  min-height: 500px; 
+  padding: 10px;
+}
+
+/* Project Card */
+.project-card {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #e0e0e0;
+  min-height: 350px; /* Add a minimum height to prevent upward shift */
+}
+
+
+/* Project Card */
+/* .project-card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+} */
+
+.project-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Project Title */
+.project-title {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Project Description */
+.project-description {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Tasks Section */
+.task-heading {
+    font-size: 1.3rem;
+    color: #007bff; /* Contrasting color for tasks */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Task List */
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task-item {
+    background: #f9f9f9;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #333; /* Darker color for task details */
+    transition: background 0.3s ease;
+}
+
+.task-item:hover {
+    background: #e0e0e0;
+}
+
+/* Collaborator Section */
+.collaborator-heading {
+    font-size: 1.3rem;
+    color: #007bff; /* Contrasting color for collaborator section */
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+/* Create Project Component Styling */
+.create-project-container {
+    margin-bottom: 30px;
+}
+
+.create-project-heading {
+    font-size: 2rem;
+    color: #007bff; /* Vibrant color for create project heading */
+    margin-bottom: 15px;
+    text-align: center;
+    position: relative;
+}
+
+.create-project-heading::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #007bff;
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+}
+
+/* Search Users Button */
+.search-button {
+    background: #28a745; /* Green color for search button */
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.search-button:hover {
+    background: #218838;
+    transform: scale(1.02);
+}

@@ -20,10 +20,11 @@ const CreateProject = () => {
 
   return (
     <form className="project-form" onSubmit={handleSubmit}>
-      <h2>Create a New Project</h2>
+      <h2 className="form-heading">Create a New Project</h2>
       <div className="form-group">
-        <label>Project Title</label>
+        <label htmlFor="title">Project Title</label>
         <input
+          id="title"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -32,8 +33,9 @@ const CreateProject = () => {
         />
       </div>
       <div className="form-group">
-        <label>Project Description</label>
+        <label htmlFor="description">Project Description</label>
         <textarea
+          id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Enter project description"

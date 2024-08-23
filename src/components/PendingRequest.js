@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchPendingRequests, handleRequest } from '../context/api'; 
 import axios from 'axios';
+import '../styling/pendingreq.css';
 
 const PendingRequests = () => {
   const [pendingRequests, setPendingRequests] = useState([]);
@@ -13,7 +14,8 @@ const PendingRequests = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      setPendingRequests(response.data);
+      setPendingRequests(response.data.requests);
+      console.log(response.data.requests);
     } catch (error) {
       console.error('Error fetching collaborator requests:', error);
     }
@@ -21,20 +23,29 @@ const PendingRequests = () => {
 
   useEffect(() => {
     getPendingRequests();
-  })
+  },[])
 
   const acceptRequest = async (projectId,res) => {
+    console.log(projectId);
     try{
+      const token= localStorage.getItem("token");
       var condition;
       if(res === "accept"){
         condition="accept";
       }else{
         condition="reject";
       }
-      const results = await axios.post(`${API_URL}/users/accept-requests`,{projectId,condition},{
+      console.log(`${API_URL}/users/accept-request`,{projectId,res},{
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      const results = await axios.post(`${API_URL}/users/accept-request`,{projectId,res},{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
       });
       console.log(results);
       alert('Request accepted /rejected');
@@ -48,18 +59,22 @@ const PendingRequests = () => {
     <div className="pending-requests">
       <h4>Pending Requests</h4>
       <ul>
-        {pendingRequests.map(request => (
-          <li key={request._id}>
-            <h3>{request.title}</h3>
-            <h5>{request.description}</h5> 
-            <button onClick={() => acceptRequest(request._id,"accept")}>
-              Accept
-            </button>
-            <button onClick={()=> acceptRequest(request._id,"reject")}>
-              Reject
-            </button>
-          </li>
-        ))}
+        {pendingRequests.length > 0 ? (
+          pendingRequests.map(request => (
+            <li key={request.projectId}>
+              <h3>{request.title}</h3>
+              <h5>{request.description}</h5>
+              <button onClick={() => acceptRequest(request.projectId, 'accept')}>
+                Accept
+              </button>
+              <button onClick={() => acceptRequest(request.projectId, 'reject')}>
+                Reject
+              </button>
+            </li>
+          ))
+        ) : (
+          <p>No pending requests</p>
+        )}
       </ul>
     </div>
   );

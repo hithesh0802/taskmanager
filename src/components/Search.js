@@ -26,15 +26,13 @@ const SearchUsers = ({ projectId }) => {
     e.preventDefault();
     const token= localStorage.getItem("token");
     try {
-      const response = await axios.post(`${API_URL}/users/search`,{params: {
-        q: username
-      }},{
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
+      const response = await axios.post(`${API_URL}/users/search`,{q: username}, {
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
       });
-      setSearchResult(response.data);
+      setSearchResult(response.data.users);
       console.log(response.data);
     } catch (error) {
       console.error('Error searching for users:', error);
@@ -42,11 +40,19 @@ const SearchUsers = ({ projectId }) => {
   };
 
   const sendRequest = async (recipientId) => {
+    
     try {
+      if(!currUser) return;
+      const token= localStorage.getItem("token");
       console.log(currUser.id ,currUser);
       const response = await axios.post(`${API_URL}/users/send-request`, {
         projectId: projectId,
         userId: recipientId
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
       });
       console.log(response.data);
     } catch (error) {
@@ -66,29 +72,22 @@ const SearchUsers = ({ projectId }) => {
         />
         <button type="submit">Search</button>
       </form>
-      {searchResult && (
-        <div className="search-results">
-          {searchResult.length > 0 ? (
-            searchResult.map((user) => (
-              <div>
-              <div key={user._id} className="friend-card">
-                <p>{user.username}</p>
-              </div>
-              <div>
-                <button onClick={() => sendRequest(user._id)} >Send Request</button>
-              </div>
-              </div>
-            ))
-          ) : (
-            <p>No Users found.</p>
-          )}
-        </div>
-      )}
+      <div className="search-results">
+        {searchResult === null ? (
+          <p>Please search for users.</p>  // Initial message before searching
+        ) : searchResult.length > 0 ? (
+          searchResult.map((user) => (
+            <div key={user._id} className="friend-card">
+              <p>{user.username}</p>
+              <button onClick={() => sendRequest(user._id)}>Send Request</button>
+            </div>
+          ))
+        ) : (
+          <p>No Users found.</p>
+        )}
+      </div>
     </div>
   );
 };
 
 export default SearchUsers;
-
-
-

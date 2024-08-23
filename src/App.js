@@ -9,11 +9,26 @@ import DashBoard from './pages/DashBoard';
 import ListHeader from './components/ListHeader';
 import CreateProject from './pages/CreateProject';
 import ProjectList from './components/ProjectList';
+import { useEffect } from 'react';
+// import { messaging } from './firebase';
+import toast, { Toaster } from 'react-hot-toast';
+import { generateToken,messaging} from './notifications/firebase';
+import { onMessage } from 'firebase/messaging';
 
 const App=()=> {
+  useEffect(() => {
+    generateToken();
+    onMessage(messaging,(payload)=>{
+        console.log(payload);
+        toast(payload.notification.body);
+    })
+  }, []);
+
+
   return (
     <div className="App" >
-      <ListHeader listname={'Taskify'}></ListHeader>
+      {/* <ListHeader listname={'Taskify'}></ListHeader> */}
+      <Toaster position='top-right'/>
       <Router>
         <Routes>
           <Route path='/register' element={<Register/>}></Route>

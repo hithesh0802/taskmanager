@@ -24,13 +24,14 @@ const Login = () => {
     return (
         <div className="login-container">
             <form onSubmit={handleSubmit} className="login-form">
-                <h2>Login</h2>
+                <h2>Welcome Back</h2>
+                <p className="subtext">Please login to your account</p>
                 <input 
                     type='email' 
                     value={email} 
                     onChange={(e) => setEmail(e.target.value)} 
                     placeholder='Enter Email' 
-                    className="input-fil"
+                    className="input-field"
                     required
                 />
                 <input 
@@ -38,10 +39,11 @@ const Login = () => {
                     value={password} 
                     onChange={(e) => setPassword(e.target.value)} 
                     placeholder='Enter Password' 
-                    className="input-fil"
+                    className="input-field"
                     required
                 />
-                <button type='submit' className="login">Login</button>
+                <button type='submit' className="login-button">Login</button>
+                <p className="signup-link">Don't have an account? <a href="/register">Sign up</a></p>
             </form>
         </div>
     );

@@ -1,0 +1,106 @@
+/* html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+} */
+
+.pending-requests {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+/* Heading */
+.pending-requests h4 {
+    font-size: 1.8rem;
+    color: #007bff; /* Vibrant color for heading */
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+}
+
+.pending-requests h4::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: #007bff;
+    position: absolute;
+    left: 50%;
+    bottom: -10px;
+    transform: translateX(-50%);
+}
+
+/* List */
+.pending-requests ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Request Item */
+.pending-requests li {
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Request Title */
+.pending-requests h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Request Description */
+.pending-requests h5 {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Buttons */
+.pending-requests button {
+    background: #007bff; /* Primary color */
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-right: 10px;
+}
+
+.pending-requests button:hover {
+    background: #0056b3; /* Darker shade for hover */
+    transform: scale(1.02);
+}
+
+/* Reject Button */
+.pending-requests button:last-of-type {
+    background: #dc3545; /* Danger color */
+}
+
+.pending-requests button:last-of-type:hover {
+    background: #c82333; /* Darker shade for reject hover */
+}
+
+/* No Pending Requests */
+.pending-requests p {
+    text-align: center;
+    font-size: 1rem;
+    color: #999;
+}
