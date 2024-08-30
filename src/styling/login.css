@@ -1,4 +1,4 @@
-.login-container {
+/* .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,4 +90,86 @@
 .signup-link a:hover {
     text-decoration: underline;
 }
+ */
 
+ 
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #050506, #18191b); 
+  }
+  
+  .login-form {
+    background: #222; 
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+  }
+  
+  .login-form h2 {
+    color: #f1c40f; 
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .login-form .subtext {
+    color: #bdc3c7; 
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .input-field {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #f1c40f; 
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #333; 
+    color: #ecf0f1; 
+  }
+  
+  .input-field::placeholder {
+    color: #7f8c8d; 
+  }
+  
+  .emaillabel{
+    margin-top: 35px;
+  }
+
+  .login-button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background: #f1c40f; 
+    color: #222;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background: #f39c12; 
+  }
+  
+  .signup-link {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .signup-link a {
+    color: #f1c40f; 
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .signup-link a:hover {
+    text-decoration: underline;
+  }
+    

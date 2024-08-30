@@ -22,13 +22,13 @@ export const fetchTasks = async(token) =>{
     return response.data;
 }
 
-export const createTask = async({token,title,description,deadline,progress,project}) =>{
-    let body= {title,description,deadline,progress,project};
+export const createTask = async({token,title,description,deadline,progress,project,labels}) =>{
+    let body= {title ,description,deadline,progress,project,labels};
     console.log(token,body);
     const response = await axios.post(`${API_URL}/tasks/createTasks`,body, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
           },
     });
     return response.data;

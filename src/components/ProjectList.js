@@ -5,6 +5,7 @@ import '../styling/projectlist.css';
 import { io } from 'socket.io-client';
 import SearchUsers from './Search';
 import PendingRequests from './PendingRequest';
+import SingleProject from './SingleProject';
 
 // const ProjectList = () => {
 //   const [projects, setProjects] = useState([]);
@@ -49,41 +50,12 @@ import PendingRequests from './PendingRequest';
 //     //[projects, socket]
   
 
-//   return (
-//     <div className="project-management-container">
-//       <CreateProject />
-//       <h3 className="pending-requests-heading">Pending Requests</h3>
-//             <PendingRequests />
-//       <h1 className="project-heading">Projects</h1>
-//       <div className="project-list">
-//         {projects.map(project => (
-//           <div className="project-card" key={project._id}>
-//             <h2 className="project-title">{project.title}</h2>
-//             <p className="project-description">{project.description}</p>
-
-//             <h3 className="task-heading">Tasks</h3>
-//             <ul className="task-list">
-//               {project.tasks.map(task => (
-//                 <li className="task-item" key={task._id}>
-//                   <strong className="task-title">{task.title}</strong> - {task.description}
-//                 </li>
-//               ))}
-//             </ul>
-
-//             <h3 className="collaborator-heading">Add Collaborator</h3>
-//             <SearchUsers projectId={project._id} />
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
+  const [selectedProject,setSelectedProject]= useState(null);
 
   const getProjects = async () => {
-    const results = await fetchProjects(); // Define fetchProjects in your API utility
+    const results = await fetchProjects(); 
     setProjects(results.projects);
   };
 
@@ -91,34 +63,89 @@ const ProjectList = () => {
     getProjects();
   }, []);
 
+  if(selectedProject){
+    return <SingleProject project={selectedProject} />
+  }
+
   return (
-    <div className="project-management-page">
-      <div className="header-section">
-        <h1 className="main-heading">My Projects</h1>
-        <CreateProject />
-      </div>
-      <PendingRequests />
-      <div className="project-list">
-        {projects.map(project => (
+    // <div className="project-list-page">
+    //   <header className="header-section">
+    //     <h1 className="main-heading">My Projects</h1>  
+    //   </header>
+    //   <div className="content-container">
+    //     <aside className="sidebar">
+    //       <PendingRequests />
+    //       <CreateProject />
+    //     </aside>
+    //     <main className="projects-container">
+    //       {projects.length > 0 ? (
+    //         projects.map(project => (
+    //           <div className="project-card" key={project._id} >
+    //             <h2 className="project-title">{project.title}</h2>
+    //             <p className="project-description">{project.description}</p>
+    //             <div className="tasks-section">
+    //               <h3 className="task-heading">Tasks</h3>
+    //               <ul className="task-list">
+    //                 {project.tasks.map(task => (
+    //                   <li className="task-item" key={task._id}>
+    //                     <strong className="task-title">{task.title}</strong> - {task.description}
+    //                   </li>
+    //                 ))}
+    //               </ul>
+    //             </div>
+    //             <div className="collaborators-section">
+    //               <h3 className="collaborator-heading">Add Collaborator</h3>
+    //               <SearchUsers projectId={project._id} />
+    //             </div>
+    //             <button className="btnview" onClick={()=> setSelectedProject(project)}>View More</button>
+    //           </div>
+    //         ))
+    //       ) : (
+    //         <p className="no-projects-message">No projects found. Create a new project to get started!</p>
+    //       )}
+    //     </main>
+    //   </div>
+    // </div>
+
+    <div className="project-list-page">
+  <header className="header-section">
+    <h1 className="main-heading">My Projects</h1>  
+  </header>
+  <div className="content-container">
+    <aside className="sidebar">
+      <div style={{marginBottom: "20px"}}><PendingRequests /></div>
+      <CreateProject />
+    </aside>
+    <main className="projects-container">
+      {projects.length > 0 ? (
+        projects.map(project => (
           <div className="project-card" key={project._id}>
             <h2 className="project-title">{project.title}</h2>
             <p className="project-description">{project.description}</p>
-
-            <h3 className="task-heading">Tasks</h3>
-            <ul className="task-list">
-              {project.tasks.map(task => (
-                <li className="task-item" key={task._id}>
-                  <strong className="task-title">{task.title}</strong> - {task.description}
-                </li>
-              ))}
-            </ul>
-
-            <h3 className="collaborator-heading">Add Collaborator</h3>
-            <SearchUsers projectId={project._id} />
+            <div className="tasks-section">
+              <h3 className="task-heading">Tasks</h3>
+              <ul className="task-list">
+                {project.tasks.map(task => (
+                  <li className="task-item" key={task._id}>
+                    <strong className="task-title">{task.title}</strong> - {task.description}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="collaborators-section">
+              <h3 className="collaborator-heading">Add Collaborator</h3>
+              <SearchUsers projectId={project._id} />
+            </div>
+            <button className="btnview" onClick={() => setSelectedProject(project)}>View More</button>
           </div>
-        ))}
-      </div>
-    </div>
+        ))
+      ) : (
+        <p className="no-projects-message">No projects found. Create a new project to get started!</p>
+      )}
+    </main>
+  </div>
+</div>
+
   );
 };
 
